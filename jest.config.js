@@ -195,4 +195,8 @@ const config = {
   // watchman: true,
 };
 
-module.exports = config;
+module.exports = {
+  testEnvironment: 'node',
+  watchPathIgnorePatterns: ['<rootDir>/data/'],
+  config
+};
