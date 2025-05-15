@@ -196,7 +196,8 @@ const config = {
 };
 
 module.exports = {
+  clearMocks: true,
+  coverageProvider: 'v8',
   testEnvironment: 'node',
   watchPathIgnorePatterns: ['<rootDir>/data/'],
-  config
 };
