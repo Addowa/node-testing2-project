@@ -1,5 +1,7 @@
+// api/users/users-router.js
+
 const express = require('express');
-const db = require('../data/db-config');
+const db = require('../../data/db-config');
 
 const router = express.Router();
 

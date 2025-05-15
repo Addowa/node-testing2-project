@@ -1,8 +1,11 @@
 const express = require('express');
+const UsersRouter = require('./users/users-router');
 const db = require('../data/db-config');
-const server = express();
 
+const server = express();
 server.use(express.json());
+
+server.use('/api/users', UsersRouter);
 
 server.get('/api/users', async (req, res) => {
   const users = await db('users');
