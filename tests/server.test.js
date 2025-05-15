@@ -60,7 +60,28 @@ describe('Users endpoints', () => {
     });
   
     test('GET /api/users/:id returns 404 for missing user', async () => {
-      const res = await request(server).get('/api/users/123');
-      expect(res.status).toBe(404);
+        const res = await request(server).get('/api/users/999');
+        expect(res.status).toBe(404);
+        expect(res.body).toEqual({ message: 'Not found' });
+    });
+    
+    test('POST /api/users returns 400 for missing username', async () => {
+        const res = await request(server).post('/api/users').send({});
+        expect(res.status).toBe(400);
+        expect(res.body).toEqual({ message: 'Username is required' });
+    });
+    
+    test('GET /api/users/count returns the total number of users', async () => {
+        await request(server).post('/api/users').send({ username: 'UserX' });
+        const res = await request(server).get('/api/users/count');
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('count');
+        expect(typeof res.body.count).toBe('number');
+    });
+    
+    test('GET /api/users responds with 200 and JSON', async () => {
+        const res = await request(server).get('/api/users');
+        expect(res.status).toBe(200);
+        expect(res.headers['content-type']).toMatch(/json/);
     });
 });
