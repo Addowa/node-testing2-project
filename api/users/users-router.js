@@ -12,6 +12,15 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/count', async (req, res) => {
+  try {
+    const [{ count }] = await db('users').count('id as count');
+    res.json({ count: Number(count) });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to get count' });
+  }
+});
+
 router.get('/:id', async (req, res) => {
   try {
     const user = await db('users').where({ id: req.params.id }).first();
@@ -63,15 +72,6 @@ router.delete('/:id', async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ message: 'Failed to delete user' });
-  }
-});
-
-router.get('/count', async (req, res) => {
-  try {
-    const [{ count }] = await db('users').count('id as count');
-    res.json({ count: Number(count) });
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to get count' });
   }
 });
 
